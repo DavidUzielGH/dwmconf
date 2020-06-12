@@ -12,7 +12,7 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#292E30";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -57,6 +57,8 @@ static const Layout layouts[] = {
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+static const char *uplight[] = { "/usr/bin/xbacklight", "-inc",   "5%", NULL };
+static const char *downlight[] = { "/usr/bin/xbacklight", "-dec",   "5%", NULL };
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -69,9 +71,11 @@ static const char *browsercmd[] = {"brave", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ 0,                       	XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                       	XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+	{ 0,                       	XF86XK_AudioLowerVolume,   spawn, {.v = downvol } },
+	{ 0,                       	XF86XK_AudioMute, spawn,   {.v = mutevol } },
+	{ 0,                       	XF86XK_AudioRaiseVolume,   spawn, {.v = upvol   } },
+	{ 0,                       	XF86XK_MonBrightnessDown,  spawn, {.v = downlight   } },
+	{ 0,                       	XF86XK_MonBrightnessUp,    spawn, {.v = uplight   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_n, 	   spawn,          {.v = browsercmd } },
