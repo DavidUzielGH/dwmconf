@@ -1251,6 +1251,7 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
+  	system("pkill dwmblocks");
 	running = 0;
 }
 
