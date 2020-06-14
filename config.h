@@ -22,14 +22,18 @@ static const char *colors[][3]      = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+static const char scratchpadname[] = "Scratchpad";
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Brave",  NULL,       NULL,         0,       0,           -1 },
+	/* class      	instance    	title  		tags mask     isfloating   monitor */
+	{ "Gimp",     	NULL,       	NULL,       	0,            1,           -1 },
+	{ "Brave",  	NULL,       	NULL,         	0,            0,           -1 },
+	{ NULL, 	NULL,           scratchpadname,   0,            1,           -1 },
+	{ NULL, 	"Ranger",       "Ranger",   0,            1,           -1 },
+	{ NULL, 	NULL,           "Calculadora",   0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -69,8 +73,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[] = {"brave", NULL};
 static const char *screenshot[] = {"escrotum", "/home/david/Pictures/Screenshots/%Y-%m-%d-%H%M%S_$wx$h_escrotum.png", NULL};
-static const char scratchpadname[] = "Alacritty";
-static const char *scratchpadcmd[] = { "alacritty", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "alacritty", "-t", scratchpadname, "--class", "Scratchpad", "-d", "120","34", "--position", "550", "300", NULL };
+static const char *scratchpadranger[] = { "alacritty", "-t", "Ranger", "--class", "Ranger", "-d", "120","34", "--position", "550", "300", "-e", "ranger", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -81,7 +85,8 @@ static Key keys[] = {
 	{ 0,                       	XF86XK_MonBrightnessUp,    spawn, {.v = uplight   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ControlMask,         	XK_Return, togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY|ControlMask,         	XK_Return, togglescratch,  {.ui = 1 } },
+	{ ControlMask,         		XK_r,      toggleranger,  {.ui = 1 } },
 	{ MODKEY|ShiftMask,             XK_n, 	   spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_s, 	   spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
