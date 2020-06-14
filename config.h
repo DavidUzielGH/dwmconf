@@ -52,6 +52,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -73,8 +74,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[] = {"brave", NULL};
 static const char *screenshot[] = {"escrotum", "/home/david/Pictures/Screenshots/%Y-%m-%d-%H%M%S_$wx$h_escrotum.png", NULL};
-static const char *scratchpadcmd[] = { "alacritty", "-t", scratchpadname, "--class", "Scratchpad", "-d", "120","34", "--position", "550", "300", NULL };
-static const char *scratchpadranger[] = { "alacritty", "-t", "Ranger", "--class", "Ranger", "-d", "120","34", "--position", "550", "300", "-e", "ranger", NULL };
+static const char *scratchpadcmd[] = { "alacritty", "-t", scratchpadname, "--class", "Scratchpad", "-d", "130","34", "--position", "550", "300", "--config-file", "/home/david/.config/alacritty/scratchpad.yml",  NULL };
+static const char *scratchpadranger[] = { "alacritty", "-t", "Ranger", "--class", "Ranger", "-d", "120","34", "--position", "550", "300", "--config-file", "/home/david/.config/alacritty/scratchpad.yml", "-e", "ranger", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -85,8 +86,8 @@ static Key keys[] = {
 	{ 0,                       	XF86XK_MonBrightnessUp,    spawn, {.v = uplight   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ControlMask,         	XK_Return, togglescratch,  {.ui = 1 } },
-	{ ControlMask,         		XK_e,      toggleranger,  {.ui = 1 } },
+	{ ALTKEY,         		XK_Return, togglescratch,  {.ui = 1 } },
+	{ ALTKEY,         		XK_e,      toggleranger,  {.ui = 1 } },
 	{ MODKEY|ShiftMask,             XK_n, 	   spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_s, 	   spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -122,7 +123,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask|ControlMask, XK_q,      quit,           {0} },
 };
 
 /* button definitions */
@@ -135,7 +136,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         ALTKEY,         Button2,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
